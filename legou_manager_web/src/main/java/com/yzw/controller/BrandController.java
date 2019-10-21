@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 拓薪教育 -- 腾讯课程认证机构
- * 樱木老师
+ *
+ * 品牌控制器
  */
 // @RestController = @Controller + @ResponseBody
 @RestController

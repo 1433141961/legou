@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例5</title>
+
+    <!--引入angularJS文件-->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+
+    <script type="text/javascript">
+        // 定义模块
+        var app = angular.module("myapp",[]);
+        // 绑定控制器
+        app.controller("mycontroller",function($scope){
+            // 定义方法
+            $scope.list = [
+                {name:'张三',age:20},
+                {name:'赵四',age:30},
+                {name:'王五',age:40}
+            ];
+        });
+
+    </script>
+
+</head>
+<body ng-app="myapp" ng-controller="mycontroller">
+    <div ng-repeat="user in list">
+        {{user.name}} -- {{user.age}}
+    </div>
+</body>
+</html>

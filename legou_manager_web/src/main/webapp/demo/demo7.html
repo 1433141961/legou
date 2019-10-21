@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例6</title>
+
+    <!--引入angularJS文件-->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+
+    <script type="text/javascript">
+        // 定义模块
+        var app = angular.module("myapp",[]);
+        // 绑定控制器
+        app.controller("mycontroller",function($scope,$http){
+            // 请求服务器
+            $http.get("../brand/findAll.do").success(function(data){
+                // 把服务器响应后的数据赋值到list变量中
+                $scope.list = data;
+            });
+        });
+
+    </script>
+
+</head>
+<body ng-app="myapp" ng-controller="mycontroller">
+    <div ng-repeat="brand in list">
+        {{brand.name}}
+    </div>
+</body>
+</html>

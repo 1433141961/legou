@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例3</title>
+
+    <!--引入angularJS文件-->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+
+    <script type="text/javascript">
+
+        // 控制器Controller
+        // $scope指的是模型 model
+        function showContent($scope){
+            // 定义变量
+            $scope.num = 20;
+            // 定义对象
+            $scope.user = {'username':'赵四'};
+        }
+
+    </script>
+
+</head>
+<body ng-app>
+
+    <!--视图view-->
+    <div ng-controller="showContent">
+        {{num}} -- {{user.username}}
+    </div>
+
+</body>
+</html>

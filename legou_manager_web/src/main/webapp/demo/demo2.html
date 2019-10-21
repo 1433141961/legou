@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例2</title>
+
+    <!--引入angularJS文件-->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+
+    <script type="text/javascript">
+        // 使用js代码完成效果
+        function showContent(){
+            // 获取输入的内容
+            var val = document.getElementById("username").value;
+            // 设置到span中
+            document.getElementById("myspan").innerHTML = val;
+        }
+    </script>
+</head>
+<body ng-app>
+
+    <h3>使用JS完成效果</h3>
+    <input type="text" name="username" id="username" onkeyup="showContent()"/>
+    <br/>
+    您输入的内容：<span id="myspan"></span>
+
+    <h3>使用AngularJS双向绑定完成效果</h3>
+    <input type="text" name="username" ng-model="content"/>
+    <br/>
+    您输入的内容：<span>{{content}}</span>
+
+</body>
+</html>

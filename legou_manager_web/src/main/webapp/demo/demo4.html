@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例3</title>
+
+    <!--引入angularJS文件-->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+
+    <script type="text/javascript">
+        // 定义了名称为 one 的模块
+        var app = angular.module("one",[]);
+        // 在one模块下定义控制器
+        app.controller("showContent",function($scope){
+            // 定义对象、变量或者方法都可以
+            $scope.user = {'username':'张三'};
+        });
+
+    </script>
+
+</head>
+
+<!--引入one模块-->
+<body ng-app="one">
+
+    <!--视图view-->
+    <div ng-controller="showContent">
+        {{user.username}}
+    </div>
+
+</body>
+</html>

@@ -1,37 +1,185 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>品牌管理</title>
-    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
-    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" href="../css/style.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>品牌管理</title>
+	<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+	<link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+	<link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+	<link rel="stylesheet" href="../css/style.css">
 	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
-    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
 
 	<!--引入angularJS-->
 	<script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
-
-	<!--引入分页js-->
+	<!--引入分页插件js-->
 	<script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
+	<!--映入分页插件css-->
+	<script type="text/javascript" src="../plugins/angularjs/pagination.css"></script>
+    <!--引入jQuery-->
+	<script type="text/javascript" src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 
-	<!--引入分页的css样式-->
-	<link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+	<script type="text/javascript">
+		//定义模块,第一个参数是模块的名称，第二个参数是加载另外模块的模块名
+		// var app = angular.module("legou",[]);
 
-	<!--引入对应的js-->
-	<script type="text/javascript" src="../js/base_pagination.js"></script>
-	<script type="text/javascript" src="../js/controller/baseController.js"></script>
-	<script type="text/javascript" src="../js/controller/brandController.js"></script>
+		// 定义模块，并且引入分页模块的插件
+		var app = angular.module("legou",['pagination']);
+		//绑定控制器
+		//注意：在使用$scope,$scope等指令的时候要现在函数上定义
+		app.controller("brandController",function ($scope,$http) {
+            //创建一个分页配置对象，设置初始属性
+            $scope.paginationConf = {
+                // 当前页
+                currentPage: 1,
+                // 总记录数
+                totalItems: 10,
+                // 每页显示的条数
+                itemsPerPage: 10,
+                // 每页可以显示的条数
+                perPageOptions: [10, 20, 30, 40, 50],
+                // 数据改变数据，当点击上一页、下一页等触发该方法
+                onChange: function () {
+                // 重新加载，获取数据的方法（当访问该页面或者分页时就会加载）
+                $scope.reloadList();
+            }
+        };
+			//重新加载页面的方法
+            $scope.reloadList = function () {
+                // alert("加载成功")
+                $http.get("../brand/findPage/"+$scope.paginationConf.currentPage+"/"+$scope.paginationConf.itemsPerPage).success(function (resp) {
+                    //查询后响应的是一个接送数据:
+					// {success:true,messge:查询成功，total：23,data[{],{},{},....]
+					if (resp.success){
+					    //总记录数
+						$scope.paginationConf.totalItems = resp.total;
+						//分页数据
+					    $scope.list = resp.data;
+					}else{
+					    //查询失败返回信息
+					    alert(resp.message)
+					}
+
+                });
+            }
 
 
-</head>
+			//修改和新增用的是同一个模态窗口，所以走的是同一个save方法
+			//保存和修改方法
+            $scope.save = function () {
+                //定义变量
+                var method = "save"
+				//判断是否存id
+                if($scope.entity.id != null){
+					method = "update"
+				}
+
+                // 利用post请求，传递创建entity对象
+				// （这里利用的angularJS的双向绑定特性,即在scope域中添加entity对象，然后通过$scope将其取出）
+                $http.post("../brand/"+method,$scope.entity).success(function(resp){
+
+                    if(resp.success){
+                        // 重新刷新数据
+                        $scope.reloadList();
+                        // 清空数据
+                        $scope.entity = {};
+                    }else{
+                        alert(resp.message);
+                    }
+                });
+
+            }
+            //修改操作，首先要查询到要修改的品牌，然后再修改。
+			//根据id查询品牌
+            $scope.findOne = function (id) {
+				$http.get("../brand/findOne/"+id).success(function (resp) {
+				    if (resp.success){
+				        //将查询的数据赋给entity
+                        $scope.entity = resp.data;
+					}else{
+				        alert(resp.message);
+					}
+
+                })
+            }
+
+            //定义一个空数组用于存储选择的id
+            $scope.selectIds = [];
+            //获得选中的数据并且把选中的id存到数组里面
+            $scope.updateSelection = function (e,id) {
+                //判断是否勾选
+                if (e.target.checked){
+                    //将所选的id存数组
+                    $scope.selectIds.push(id);
+                }else{
+                    //获得id的索引
+                    var index = $scope.selectIds.indexOf(id);
+                    //根据索引删除id，index元素下标值 1移除的数量
+                    $scope.selectIds.splice(index,1);
+                }
+                
+            }
+            
+            
+            //删除
+            $scope.dele = function () {
+                //判断数组私服为空再向下执行删除操作
+                if ($scope.selectIds.length == 0){
+                    return;
+                }
+                //确认是否删除
+                if (window.confirm("确定要删除吗？")){
+                    $http.get("../brand/delete?ids="+$scope.selectIds).success(function (resp) {
+                        if (resp.success){
+                            //重新加载
+                            $scope.reloadList();
+                            //清楚选框
+                            $scope.selectIds = [];
+                        }else{
+                            alert(resp.message);
+                        }
+                    })
+                }
+            }
+
+        });
+
+		//选中所有的商品
+		$("#selall").click(function () {
+		    alert("yyyyyyyy")
+            if ($(this).attr("checked")=="checked"){
+                $("#select").attr("checked","checked");
+                $("#select").each(function () {
+                    //获得id
+                    var id = $(this).attr("value");
+                    $scope.selectIds.push(id);
+                })
+            }else{
+                $("#select").each(function () {
+                    var id = $(this).attr("value");
+                    $(this).removeAttr("checked");
+                    //获得id的索引
+                    var index = $scope.selectIds.indexOf(id);
+                    //根据索引删除id，index元素下标值 1移除的数量
+                    $scope.selectIds.splice(index,1);
+                })
+            }
+        })
+
+
+
+	</script>
+
+
+
+</head>														<!--这里一定要注意方法min不能写成findAll，要用findAll()的形式 ng-init="findAll()"-->
 <body class="hold-transition skin-red sidebar-mini" ng-app="legou" ng-controller="brandController">
   					<!-- .box-body -->
                     <div class="box-header with-border">
-                        <h3 class="box-title">品牌管理{{selectIds}}</h3>
+                        <h3 class="box-title">品牌管理<!--{{selectIds}}--></h3>
                     </div>
 
                     <div class="box-body">
@@ -72,21 +220,20 @@
 			                      </thead>
 			                      <tbody>
 			                          <tr ng-repeat="brand in list">
-			                              <td><input ng-click="updateSelection($event,brand.id)"  type="checkbox" ></td>
-				                          <td>{{brand.id}}</td>
-									      <td>{{brand.name}}</td>
-		                                  <td>{{brand.firstChar}}</td>
-		                                  <td class="text-center">                                           
+			                              <td><input id="select" ng-click="updateSelection($event,brand.id)"  type="checkbox" value="brand.id" ></td>
+										  <td>{{brand.id}}</td>
+										  <td>{{brand.name}}</td>
+										  <td>{{brand.firstChar}}</td>
+		                                  <td class="text-center">
 		                                 	  <button type="button" class="btn bg-olive btn-xs" ng-click="findOne(brand.id)" data-toggle="modal" data-target="#editModal"  >修改</button>
 		                                  </td>
 			                          </tr>
 			                      </tbody>
 			                  </table>
-
-			                  <!--数据分页数据栏-->
-							  <tm-pagination conf="paginationConf"/>
-
+							<!--数据分页数据栏-->
+							<tm-pagination conf="paginationConf"/>
 						</div>
+
                         <!-- 数据表格 /-->
 
                      </div>

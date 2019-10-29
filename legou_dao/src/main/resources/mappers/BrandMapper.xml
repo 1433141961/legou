@@ -7,4 +7,24 @@
         select * from tb_brand
     </select>
 
+    <!--新增品牌数据-->
+    <insert id="save" parameterType="Brand">
+        insert into tb_brand(name,first_char) values(#{name},#{firstChar})
+    </insert>
+
+    <!--根据id查询品牌-->
+    <select id="findOne" parameterType="long" resultType="Brand">
+        select * from tb_brand where id = #{id}
+    </select>
+
+    <!--修改 -->
+    <update id="update" parameterType="Brand">
+        update tb_brand set name=#{name},first_char=#{firstChar} where id = #{id}
+    </update>
+
+    <!--根据id删除品牌 -->
+    <delete id="delete" parameterType="long">
+      delete from tb_brand where id = #{id};
+    </delete>
+
 </mapper>

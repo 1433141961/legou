@@ -2,6 +2,10 @@ package com.yzw.domain;
 
 import java.io.Serializable;
 
+/**
+ * 品牌
+ */
+
 public class Brand implements Serializable {
 
     // 主键

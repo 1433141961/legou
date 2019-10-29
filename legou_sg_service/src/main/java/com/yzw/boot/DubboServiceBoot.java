@@ -6,6 +6,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 
+/**
+ * 启动类
+ */
+
 public class DubboServiceBoot {
         public static void main(String[] args) throws IOException {
             // 加载

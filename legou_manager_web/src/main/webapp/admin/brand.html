@@ -19,10 +19,21 @@
 	<script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
 	<!--映入分页插件css-->
 	<script type="text/javascript" src="../plugins/angularjs/pagination.css"></script>
-    <!--引入jQuery-->
-	<script type="text/javascript" src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<!--base-->
+	<script type="text/javascript" src="../js/controller/baseController.js"></script>
 
-	<script type="text/javascript">
+	<!--引入对应的js-->
+	<!--定义有分页的模块-->
+	<script type="text/javascript" src="../js/base_pagination.js"></script>
+	<!--通用代码-->
+	<script type="text/javascript" src="../js/controller/baseController.js"></script>
+	<!--品牌操作代码-->
+	<script type="text/javascript" src="../js/controller/brandController.js"></script>
+
+
+
+	<!--代码已经重构，以下代码为重构前-->
+	<!--<script type="text/javascript">
 		//定义模块,第一个参数是模块的名称，第二个参数是加载另外模块的模块名
 		// var app = angular.module("legou",[]);
 
@@ -172,7 +183,7 @@
 
 
 	</script>
-
+-->
 
 
 </head>														<!--这里一定要注意方法min不能写成findAll，要用findAll()的形式 ng-init="findAll()"-->

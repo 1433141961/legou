@@ -37,6 +37,8 @@ app.controller("specificationController",function($scope,$controller,$http){
             if(resp.success){
                 // 重新刷新数据
                 $scope.reloadList();
+                //清空entity
+                $scope.entity = {};
             }else{
                 alert(resp.message);
             }

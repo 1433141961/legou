@@ -7,7 +7,10 @@ import com.yzw.entity.Result;
 import com.yzw.service.BrandService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -120,6 +123,32 @@ public class BrandController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false,"删除失败");
+        }
+    }
+    /**
+     * 查询品牌集，这里是用在模板管理模块新增模块select2选项框
+     *
+     * 注意：，由于我们需要的格式为[{id:1,text:'联想'},{id:2,text:'华为'},{id:3,text:'小米'}]，
+     * 而品牌实体类中name字段与我们需要的text字段不同所以我们要另外封装
+     * @return
+     */
+    @RequestMapping("/findBrandList")
+    public Result findBrandList(){
+        try {
+            List<Brand> brandList = brandService.findAll();
+            //封装为我们需要的数据
+            List<Map> brandMapList = new ArrayList<>();
+            for (Brand brand : brandList){
+                Map<String,Object> map = new HashMap<>();
+                map.put("id",brand.getId());
+                map.put("text",brand.getName());
+                //添加到集合
+                brandMapList.add(map);
+            }
+            return new Result(true,"操作成功",brandMapList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,"操作失败");
         }
     }
 

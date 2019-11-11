@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../css/style.css">
 	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!--引入select2插件-->
     <link rel="stylesheet" href="../plugins/select2/select2.css" />
     <link rel="stylesheet" href="../plugins/select2/select2-bootstrap.css" />
     <script src="../plugins/select2/select2.min.js" type="text/javascript"></script>
@@ -53,7 +54,7 @@
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default" title="新建" ng-click="entity={customAttributeItems:[]}"  data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                                        <button type="button" class="btn btn-default" title="删除" ng-click="dele()" ><i class="fa fa-trash-o"></i> 删除</button>
 
                                         <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
@@ -84,7 +85,7 @@
 			                      </thead>
 			                      <tbody>
 			                          <tr ng-repeat="pojo in list">
-			                              <td><input  type="checkbox"></td>			                              
+			                              <td><input ng-click="updateSelection($event,pojo.id)" type="checkbox"></td>
 				                          <td>{{pojo.id}}</td>
 									      <td>{{pojo.name}}</td>
 										  <td>{{arrayToString(pojo.brandIds)}}</td>
@@ -93,7 +94,7 @@
 										  <td>{{arrayToString(pojo.customAttributeItems)}}</td>
 									      <td></td>		                                                                  
 		                                  <td class="text-center">                                           
-		                                 	  <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" >修改</button>                                           
+		                                 	  <button type="button" ng-click="findOne(pojo.id)" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" >修改</button>
 		                                  </td>
 			                          </tr>
 
@@ -129,6 +130,10 @@
 		      	<tr>
 		      		<td>关联品牌</td>
 		      		<td>
+						<!--这里使用的是select2主键
+							 select2-model ：这个属性是angularjs和select2主键封装后的，和ng-model类似
+							 config：这里表示要回显的数据
+						-->
 						<input select2 placeholder="选择品牌(可以多选)" select2-model="entity.brandIds" config="brandList" multiple class="form-control" >
 		      		</td>
 		      	</tr>

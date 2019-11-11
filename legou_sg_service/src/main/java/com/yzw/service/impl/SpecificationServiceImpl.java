@@ -140,8 +140,6 @@ public class SpecificationServiceImpl implements SpecificationService {
             //保存规格选项
             specificationOptionMapper.insert(tbSpecificationOption);
         }
-
-
     }
 
 }

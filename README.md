@@ -118,7 +118,7 @@
                 };
  **运营商后台登录**     
  
-    该模块使用的是spring security做的认证。这边没有访问数据库，是在配置文件中配置的认证管理，
+    该模块使用的是spring security做的认证。和其他登录功能不同，这边没有访问数据库，,是在配置文件（springSecurity.xml）中配置的认证管理，
     配置如下：
         <!--认证管理器-->
             <authentication-manager>
@@ -140,5 +140,5 @@
                 //获得name
                 String userName = context.getAuthentication().getName();
                 
-                这里只是简单做了一个登录功能，后续功能继续跟上，如：扫码登录，验证功能
-            
+                这里只是简单做了一个登录功能，后续功能继续跟上，如：扫码登录，验证功能,有想法可以自己添加，
+                可以做二次开发

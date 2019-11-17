@@ -111,4 +111,27 @@
                         }
                     });
                 };
-      
+ **运营商后台登录**     
+ 
+    该模块使用的是spring security做的认证。这边没有访问数据库，是在配置文件中配置的认证管理，
+    配置如下：
+        <!--认证管理器-->
+            <authentication-manager>
+                <authentication-provider>
+                    <user-service>
+                        <!--密码前面没加{noop} 这个域版本有关，5.0以前的版本不需要加，之后需要加-->
+                        <user name="admin" password="123456"  authorities="ROLE_ADMIN"></user>
+                    </user-service>
+                </authentication-provider>
+            </authentication-manager>
+            **注意**
+                根据版本问题是否在密码前面加{noop}。假如是5.0版本以上是需要加的，在5.0一下就不需要加
+            
+    后台获取用户名的方式，代码如下：        
+     //创建security上下文所有者对象
+                SecurityContextHolder sc = new SecurityContextHolder();
+                //获得上下文对象
+                SecurityContext context = sc.getContext();
+                //获得name
+                String userName = context.getAuthentication().getName();
+            

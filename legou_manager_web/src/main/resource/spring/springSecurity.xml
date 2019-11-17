@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+        xmlns="http://www.springframework.org/schema/security"
+        xmlns:beans="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+                  http://www.springframework.org/schema/beans/spring-beans.xsd
+                  http://www.springframework.org/schema/security
+                  http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!--配置不被拦截的页面-->
+    <http pattern="/login.html" security="none"></http>
+    <http pattern="/login_error.html" security="none"/>
+    <!--静态资源不拦截-->
+    <http pattern="/img/**" security="none"/>
+    <http pattern="/css/**" security="none"/>
+    <http pattern="/js/**" security="none"/>
+    <http pattern="/plugins/**" security="none"/>
+
+    <!--页面拦截跪着 false表示不使用spel表达式，true则使用-->
+    <http use-expressions="false">
+        <!--拦截所有的请求必须要先登录，并且登录成功的用户需要管理员权限-->
+        <intercept-url pattern="/**" access="ROLE_ADMIN"/>
+        <form-login
+                login-page="/login.html"
+                default-target-url="/admin/index.html"
+                authentication-failure-url="/login_error.html"
+                always-use-default-target="true"/>
+
+        <!--跨域攻击配置 true表示关闭-->
+        <csrf disabled="true"/>
+        <!--用户退出配置
+            logout-url：logout表示退出
+            logout-success-url：设置退出的页面面
+        -->
+        <logout logout-url="/logout" logout-success-url="/login.html"/>
+
+        <!--iframe策略-->
+        <headers>
+            <!--
+                sameorigin：表示该该页面可以在相同域名的页面展示
+                deny：表示该页面不允许在frame中展示，即便是相同的页面中嵌套也不可以
+                allow-fram：表示该页面可以在指定的frame页面展示
+            -->
+            <frame-options policy="SAMEORIGIN"/>
+        </headers>
+    </http>
+
+    <!--认证管理器-->
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <!--密码前面没加{noop} 这个域版本有关，5.0以前的版本不需要加，之后需要加-->
+                <user name="admin" password="123456"  authorities="ROLE_ADMIN"></user>
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+</beans:beans>

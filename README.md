@@ -1,3 +1,8 @@
+起止时间：2019.10.20---至今
+编写人：元志伟
+QQ：1433141961
+邮箱:1433141961@qq.com
+
 **乐购商城的介绍**
 
     乐购商城是一个综合性的 B2乐购商城主要分为网站前台B2C 平台，类似京东商城、天猫商城。网站采用商家入驻的模式，
@@ -134,4 +139,6 @@
                 SecurityContext context = sc.getContext();
                 //获得name
                 String userName = context.getAuthentication().getName();
+                
+                这里只是简单做了一个登录功能，后续功能继续跟上，如：扫码登录，验证功能
             

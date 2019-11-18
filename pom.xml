@@ -14,6 +14,7 @@
         <module>legou_sg_interface</module>
         <module>legou_sg_service</module>
         <module>legou_manager_web</module>
+        <module>legou_shop_web</module>
     </modules>
     <packaging>pom</packaging>
 

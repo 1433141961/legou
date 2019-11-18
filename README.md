@@ -142,3 +142,45 @@
                 
                 这里只是简单做了一个登录功能，后续功能继续跟上，如：扫码登录，验证功能,有想法可以自己添加，
                 可以做二次开发
+                              
+                
+----------------------------------------------------商家后台功能说明------------------------------------------------------
+环境搭建时间：2019-11-18
+
+
+**商家系统申请入驻功能**
+   
+        **首先我们来看看表结构**：如下：
+            CREATE TABLE `tb_seller` (
+              `seller_id` varchar(100) NOT NULL COMMENT '用户ID',
+              `name` varchar(80) DEFAULT NULL COMMENT '公司名',
+              `nick_name` varchar(50) DEFAULT NULL COMMENT '店铺名称',
+              `password` varchar(60) DEFAULT NULL COMMENT '密码',
+              `email` varchar(40) DEFAULT NULL COMMENT 'EMAIL',
+              `mobile` varchar(11) DEFAULT NULL COMMENT '公司手机',
+              `telephone` varchar(50) DEFAULT NULL COMMENT '公司电话',
+              `status` varchar(1) DEFAULT '0' COMMENT '状态',
+              `address_detail` varchar(100) DEFAULT NULL COMMENT '详细地址',
+              `linkman_name` varchar(50) DEFAULT NULL COMMENT '联系人姓名',
+              `linkman_qq` varchar(13) DEFAULT NULL COMMENT '联系人QQ',
+              `linkman_mobile` varchar(11) DEFAULT NULL COMMENT '联系人电话',
+              `linkman_email` varchar(40) DEFAULT NULL COMMENT '联系人EMAIL',
+              `license_number` varchar(20) DEFAULT NULL COMMENT '营业执照号',
+              `tax_number` varchar(20) DEFAULT NULL COMMENT '税务登记证号',
+              `org_number` varchar(20) DEFAULT NULL COMMENT '组织机构代码',
+              `address` bigint(20) DEFAULT NULL COMMENT '公司地址',
+              `logo_pic` varchar(100) DEFAULT NULL COMMENT '公司LOGO图',
+              `brief` varchar(2000) DEFAULT NULL COMMENT '简介',
+              `create_time` datetime DEFAULT NULL COMMENT '创建日期',
+              `legal_person` varchar(40) DEFAULT NULL COMMENT '法定代表人',
+              `legal_person_card_id` varchar(25) DEFAULT NULL COMMENT '法定代表人身份证',
+              `bank_user` varchar(50) DEFAULT NULL COMMENT '开户行账号名称',
+              `bank_name` varchar(100) DEFAULT NULL COMMENT '开户行',
+              PRIMARY KEY (`seller_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+            
+            该表最重要的三个字段（seller_id,status,password）,既然重要，当然是后续是要操作的，seller_id表示商家名称也表示商家id（这个字段很重要，具体看代码）；
+            stuts表示商家审核的状态；password密码，这里为了安全我们需要进行加密，采用spring security框架的加密算法进行加密
+
+
+

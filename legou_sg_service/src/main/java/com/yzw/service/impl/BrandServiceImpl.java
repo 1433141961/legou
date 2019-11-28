@@ -4,8 +4,12 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yzw.domain.Brand;
+import com.yzw.domain.TbSeller;
+import com.yzw.domain.TbSellerExample;
 import com.yzw.mapper.BrandMapper;
+import com.yzw.mapper.TbSellerMapper;
 import com.yzw.service.BrandService;
+import com.yzw.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 

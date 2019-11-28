@@ -6,19 +6,17 @@ import com.github.pagehelper.PageInfo;
 import com.yzw.domain.TbSeller;
 import com.yzw.entity.Result;
 import com.yzw.service.SellerService;
+import org.springframework.security.access.method.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 
 /**
  * controller
- *
- * @author Administrator
  */
 @RestController
 @RequestMapping("/seller")
@@ -60,7 +58,7 @@ public class SellerController {
     }
 
     /**
-     * 增加
+     * 入住申请
      *
      * @param seller
      * @return
@@ -68,28 +66,24 @@ public class SellerController {
     @RequestMapping("/save")
     public Result save(@RequestBody TbSeller seller) {
         try {
-            // TbSeller的status属性表示状态，0：未审核 1：已审核 2：审核未通过 3：关闭
-            // 默认设置成0
-            seller.setStatus("0");
-            // 设置入住的时间
-            seller.setCreateTime(new Date());
-            // 对商家的密码进行加密管理
-            // 获取到用户输入的密码
-            String password = seller.getPassword();
-            // 使用SpringSecurity框架的加密算法进行加密
+            // 对密码进行加密的处理
+            // 加密的方式
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            // 加密处理
-            password = encoder.encode(password);
-            // 设置新密码
-            seller.setPassword(password);
-            // 入住
+            // 对密码加密 设置进去
+            seller.setPassword(encoder.encode(seller.getPassword()));
+            // 判断密码是否正确，使用框架提供方法
+            // encoder.matches("123456","密文的密码");
+
+            // 商家的状态  未审核的状态
+            seller.setStatus("0");
+
+            // 保存
             sellerService.add(seller);
             return new Result(true, "增加成功");
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, "增加失败");
         }
-
     }
 
     /**
@@ -160,5 +154,24 @@ public class SellerController {
             return new Result(false, "查询失败");
         }
     }
+
+    /**
+     *商家审核
+     * @param sellerId
+     * @param status
+     * @return
+     */
+    @RequestMapping("/auditing/{sellerId}/{status}")
+    public Result auditing(@PathVariable("sellerId") String sellerId, @PathVariable("status") String status) {
+        try {
+            sellerService.auditing(sellerId,status);
+            return new Result(true, "审核成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "审核失败");
+        }
+    }
+
+
 
 }

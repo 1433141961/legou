@@ -1,6 +1,5 @@
 // 定义公共的Controller，把公共的代码抽取出来，存放到该controller中，其他Controller可以继承该Controller
 app.controller("baseController",function($scope){
-
     // 定义分页插件对象，设置分页的属性
     $scope.paginationConf = {
         // 当前页

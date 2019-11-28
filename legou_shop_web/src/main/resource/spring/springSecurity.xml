@@ -15,6 +15,7 @@
     <http pattern="/shoplogin.html" security="none"></http>
     <http pattern="/shoplogin_error.html" security="none"></http>
     <http pattern="/register.html" security="none"></http>
+    <!--商家注册不拦截-->
     <http pattern="/seller/save" security="none"></http>
     <!--配置静态资源不拦截-->
     <http pattern="/css/**" security="none"></http>
@@ -37,12 +38,25 @@
         <csrf disabled="true" />
 
         <!--退出-->
-        <logout logout-url="/logout"/>
+        <logout logout-url="/logout" logout-success-url="/shoplogin.html"/>
 
         <!-- iframe策略 -->
         <headers>
             <frame-options policy="SAMEORIGIN" />
         </headers>
     </http>
+    <!--配置密码加密对象-->
+    <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <!--由于注解方式无法注入，所以使用配置文件bean注入-->
+    <beans:bean id="userDetailsService" class="com.yzw.controller.userDetailsServiceImpl"/>
+    <!--配置认证管理器-->
+    <authentication-manager>
+        <!--配置账号密码验证服务类，从数据库中取值校验-->
+        <authentication-provider user-service-ref="userDetailsService">
+            <!--引入密码加密对象-->
+            <password-encoder ref="passwordEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
 
 </beans:beans>

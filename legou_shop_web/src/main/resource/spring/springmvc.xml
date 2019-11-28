@@ -27,7 +27,7 @@
     </mvc:annotation-driven>
 
     <!-- dubbo应用名称 -->
-    <dubbo:application name="legou_shop_web" />
+    <dubbo:application name="legou-shop-web" />
     <!--dubbo服务地址-->
     <dubbo:registry address="zookeeper://192.168.25.133:2181"/>
     <!--扫描controller的包结构-->

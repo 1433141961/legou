@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 品牌服务接口
  */
-public interface BrandService {
+public interface BrandService{
     //查询所有
     public List<Brand> findAll();
     //分页查询

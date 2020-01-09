@@ -25,8 +25,15 @@ app.controller("goodsEditController",function($scope,$http){
 			}
 		});
 	};
-	
-	// 如果entity.tbGoods.category1Id一旦发生改变 触发查询二级分类的方法
+
+    /**
+     *
+     * swatch：监听，观察
+     *   如果entity.tbGoods.category1Id一旦发生改变 触发查询二级分类的方法
+     *
+     *   newValue就是当前监听的那个值，这里是entity.tbGoods.category1Id
+     */
+
 	$scope.$watch("entity.tbGoods.category1Id",function( newValue,oldValue){
         // 查询一级分类
         $http.get('../itemCat/findByParentId/'+newValue).success(function(resp){
@@ -42,15 +49,26 @@ app.controller("goodsEditController",function($scope,$http){
         });
 	});
 	
-	// 如果entity.tbGoods.category2Id一旦发生改变 触发查询三级分类的方法
+	/**
+     * 观察二级分类
+     * 	如果entity.tbGoods.category2Id一旦发生改变 触发查询三级分类的方法
+     *
+	* */
 	$scope.$watch("entity.tbGoods.category2Id",function( newValue){
 		// function可以有两个参数 newValue和oldValue 也可以有一个参数 newValue
         $http.get('../itemCat/findByParentId/'+newValue).success(function(resp){
 			$scope.category3List=resp.data;
 		})
 	});
-	
-	//如果entity.tbGoods.category3Id一旦发生改变 触发查询分类方法
+
+    /**
+     *
+     * 观察三级分类
+     * 如果entity.tbGoods.category3Id一旦发生改变 查询模板id
+     *
+     *
+     */
+
 	$scope.$watch("entity.tbGoods.category3Id",function( newValue,oldValue){
 		// function可以有两个参数 newValue和oldValue 也可以有一个参数 newValue
         $http.get('../itemCat/findOne/'+newValue).success(function(resp){

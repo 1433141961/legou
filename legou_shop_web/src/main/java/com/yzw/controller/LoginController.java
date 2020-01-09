@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 登录功能
  */
-
-
 @RestController
 @RequestMapping("/login")
 public class LoginController {

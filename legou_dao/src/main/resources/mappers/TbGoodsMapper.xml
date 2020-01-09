@@ -113,6 +113,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.yzw.domain.TbGoods">
+
+    <selectKey keyColumn="id" keyProperty="id" resultType="long">
+      select last_insert_id();
+    </selectKey>
     insert into tb_goods (id, seller_id, goods_name, 
       default_item_id, audit_status, is_marketable, 
       brand_id, caption, category1_id, 

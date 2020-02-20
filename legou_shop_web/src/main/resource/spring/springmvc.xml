@@ -29,16 +29,16 @@
     <!-- dubbo应用名称 -->
     <dubbo:application name="legou-shop-web" />
     <!--dubbo服务地址-->
-    <dubbo:registry address="zookeeper://192.168.25.133:2181"/>
+    <dubbo:registry address="zookeeper://192.168.25.128:2181"/>
     <!--扫描controller的包结构-->
     <dubbo:annotation package="com.yzw.controller" />
 
-    <!--配置文件上传解析器对象
+    <!--&lt;!&ndash;配置文件上传解析器对象-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="UTF-8"></property>
         <property name="maxUploadSize" value="5242880"></property>
     </bean>
-    -->
+
 
     <!--静态资源不处理，走默认的Servlet-->
     <mvc:default-servlet-handler />

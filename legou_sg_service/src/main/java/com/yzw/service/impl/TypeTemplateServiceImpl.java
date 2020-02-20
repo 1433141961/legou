@@ -1,16 +1,23 @@
 package com.yzw.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yzw.domain.TbSpecificationOption;
+import com.yzw.domain.TbSpecificationOptionExample;
 import com.yzw.domain.TbTypeTemplate;
 import com.yzw.domain.TbTypeTemplateExample;
+import com.yzw.mapper.TbSpecificationOptionMapper;
 import com.yzw.mapper.TbTypeTemplateMapper;
 import com.yzw.service.TypeTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -19,9 +26,11 @@ import java.util.List;
 @Service
 @Transactional
 public class TypeTemplateServiceImpl implements TypeTemplateService {
-    
+
     @Autowired
     private TbTypeTemplateMapper tbTypeTemplateMapper;
+    @Autowired
+    private TbSpecificationOptionMapper tbSpecificationOptionMapper;
 
     /**
      * 查询所有
@@ -126,6 +135,38 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
         // 封装数据
         PageInfo<TbTypeTemplate> pageInfo = new PageInfo<>(list);
         return pageInfo;
+    }
+
+    /**
+     * 查询规格信息
+     * @param id 模板id
+     * @return List<Map></>map：有三组数据：规格id ，规格text，规格项
+     */
+    @Transactional
+    @Override
+    public List<Map> findSpecList(Long id) {
+
+        //首先根据模板id拿到模板对象
+        TbTypeTemplate tbTypeTemplate = tbTypeTemplateMapper.selectByPrimaryKey(id);
+        //获得模板下的规格id字符串[{"id":27,"text":"网络"},{"id":32,"text":"机身内存"}]
+        String specIds = tbTypeTemplate.getSpecIds();
+        //转化为json,并返回存map的list集合
+        List<Map> list = JSON.parseArray(specIds,Map.class);
+        for (Map map : list) {
+            //获得规格id
+           long specId = Long.parseLong( map.get("id")+"");
+           //查询条件
+            TbSpecificationOptionExample example = new TbSpecificationOptionExample();
+
+            TbSpecificationOptionExample.Criteria criteria = example.createCriteria();
+            criteria.andSpecIdEqualTo(specId);
+            //查询规格项
+            List<TbSpecificationOption> tbSpecificationOptions = tbSpecificationOptionMapper.selectByExample(example);
+
+            //将规格项集合保存到集合中
+            map.put("options",tbSpecificationOptions);
+        }
+        return list;
     }
 
 }

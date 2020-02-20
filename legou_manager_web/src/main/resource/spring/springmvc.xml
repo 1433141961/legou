@@ -29,7 +29,7 @@
 	<!-- 引用dubbo服务 -->
 	<dubbo:application name="legou-manager-web" />
 	<!--dubbo服务地址-->
-	<dubbo:registry address="zookeeper://192.168.25.133:2181"/>
+	<dubbo:registry address="zookeeper://192.168.25.128:2181"/>
 	<!--扫描controller的包结构-->
 	<dubbo:annotation package="com.yzw.controller" />
 

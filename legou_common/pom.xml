@@ -11,5 +11,18 @@
 
     <artifactId>legou_common</artifactId>
 
+    <dependencies>
+        <!-- 文件服务器 -->
+        <dependency>
+            <groupId>org.csource.fastdfs</groupId>
+            <artifactId>fastdfs</artifactId>
+        </dependency>
+        <!--文件上传组件-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>

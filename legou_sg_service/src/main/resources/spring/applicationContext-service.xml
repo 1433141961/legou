@@ -13,7 +13,7 @@
 	<!--协议及其端口-->
     <dubbo:protocol name="dubbo" port="20881"></dubbo:protocol>
 	<!--注册的地址-->
-    <dubbo:registry address="zookeeper://192.168.25.133:2181"/>
+    <dubbo:registry address="zookeeper://192.168.25.128:2181"/>
 	<!--提供服务的类，同时也开启了注解扫描-->
     <dubbo:annotation package="com.yzw.service.impl" />
 	<!--连接zookeeper的连接超时时间-->

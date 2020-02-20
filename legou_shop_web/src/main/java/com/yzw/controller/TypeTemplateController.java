@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * controller
@@ -103,6 +104,24 @@ public class TypeTemplateController {
         try {
             TbTypeTemplate typeTemplate = typeTemplateService.findOne(id);
             return new Result(true, "查询成功", typeTemplate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "查询失败");
+        }
+    }
+
+    /**
+     * 获取实体
+     *
+     * @param id 模板id
+     * @return
+     */
+    @RequestMapping("/findSpecList/{id}")
+    public Result findSpecList(@PathVariable("id") Long id) {
+        try {
+            //查询规格信息
+            List<Map> list = typeTemplateService.findSpecList(id);
+            return new Result(true, "查询成功",list);
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, "查询失败");

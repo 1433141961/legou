@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.yzw.domain.TbTypeTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 模板模块接口
@@ -53,5 +54,7 @@ public interface TypeTemplateService {
 	 * @return
 	 */
 	public PageInfo<TbTypeTemplate> findPage(TbTypeTemplate typeTemplate, int pageNum, int pageSize);
-	
+
+    List<Map> findSpecList(Long id);
+
 }

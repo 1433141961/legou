@@ -15,6 +15,11 @@
         <module>legou_sg_service</module>
         <module>legou_manager_web</module>
         <module>legou_shop_web</module>
+        <module>legou_solrdata_init</module>
+        <module>legou_portal_web</module>
+        <module>legou_search_interface</module>
+        <module>legou_search_service</module>
+        <module>legou_search_web</module>
     </modules>
     <packaging>pom</packaging>
 

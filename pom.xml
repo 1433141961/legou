@@ -20,6 +20,9 @@
         <module>legou_search_interface</module>
         <module>legou_search_service</module>
         <module>legou_search_web</module>
+        <module>legou_itempage_interface</module>
+        <module>legou_itempage_service</module>
+        <module>legou_itempage_web</module>
     </modules>
     <packaging>pom</packaging>
 
